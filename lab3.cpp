@@ -1,3 +1,5 @@
+//change dictionary and boards to pass by reference to increase the speed
+
 #include<iostream>
 #include<math.h>
 #include<string>
