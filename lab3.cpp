@@ -50,7 +50,7 @@ void initializeBoard(vector<vector<string>>& board, vector<vector<bool>>& boolBo
 }
 
 //Output function
-void printBoardandAnswers(vector<vector<string>> board, vector<string>& answerList, char* argv[]) {
+void printBoardandAnswers(vector<vector<string>>& board, vector<string>& answerList, char* argv[]) {
 
     ofstream out;
     out.open(argv[3]);
@@ -74,11 +74,15 @@ void printBoardandAnswers(vector<vector<string>> board, vector<string>& answerLi
         out.close();
 }
 //Dictionary Search
-void searchDictionary(set<string> dictionary, vector<string>& answerList, string pre){
-    if (dictionary.find(pre) != dictionary.end()) {
-            if(find(answerList.begin(), answerList.end(), pre) == answerList.end())
+void searchDictionary(set<string>& dictionary, vector<string>& answerList, string pre){
+    if (pre.length() > 3){
+      if (dictionary.find(pre) != dictionary.end()) {
+        if(find(answerList.begin(), answerList.end(), pre) == answerList.end())
             answerList.push_back(pre);
+      }
+
     }
+
 }
 
 //Recursive check function
@@ -94,9 +98,9 @@ void rec(int row, int col, string pre, vector<vector<string>> board, vector<vect
 		auto itr = dictionary.lower_bound(pre);
 		
 		if (itr != dictionary.end() && pre == (*itr).substr(0, pre.length())) {
-                                        if (pre.length() > 3) {		// find in dictionary and add to vector
-                                                searchDictionary(dictionary, answerList, pre);
-					}
+
+                    searchDictionary(dictionary, answerList, pre);
+
 			rec(row - 1, col, pre, board, boolBoard, dictionary, answerList);
 			rec(row - 1, col + 1, pre, board, boolBoard, dictionary, answerList);
 			rec(row, col + 1, pre, board, boolBoard, dictionary, answerList);
